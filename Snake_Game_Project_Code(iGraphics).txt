@@ -1,0 +1,2341 @@
+/*
+    Original Author: S. M. Shahriar Nirjon
+    Last Modified by: Mohammad Saifur Rahman
+    last modified: October 13, 2015
+    Version: 2.0
+*/
+
+
+
+
+# include "iGraphics.h"
+#include<stdlib.h>
+#include<string.h>
+#include<time.h>
+int mposx,  mposy;
+int win_w = 1300, win_h = 600;
+
+
+int forTime = 0;
+int mint = 2, sec = 0;
+
+int snake_head_cobra_right_pos_x = 155;
+int snake_head_cobra_right_pos_y = 75;
+
+int flag_snake_head_cobra_right = 1;
+int flag_snake_head_cobra_left = 0;
+int flag_snake_head_cobra_up = 0;
+int flag_snake_head_cobra_down = 0;
+
+
+
+
+int lifeCounter = 0;
+int counter_for_show_game_over = 0;
+
+int Showing_congratulations_background = 0;
+int flag_when_menu_snake_move_not_possible = 0;
+
+int flag_for_level2_snake_initial_pos = 1;
+int flag_for_final_level_snake_initial_pos = 1;
+
+int counter_for_sp_food = 0;
+int counter_for_special_circle_food = 0;
+
+int obstacle_working_flag = 0;
+
+int forPoint = 0;
+int foodCounter = 0;
+int forFood = 15;
+int forFoodTemp=0;
+int forFoodTempFinal = 0;
+
+
+
+int for_first_life ;
+int for_second_life;
+int for_third_life ;
+
+int i=0;
+
+int j = 0;
+int k = 1;
+
+
+int window_flag = 0;
+
+int level_1_for_draw = 0;
+int level_2_for_draw = 0;
+int final_level_for_draw = 0;
+int flag1_for_menu = 1;
+int flagForMove = 0;
+
+
+int flag = 0;
+/*
+int flag1 = 0;
+int flag2 = 0;
+int flag3 = 1;*/
+ int circle1_position_x = 180;
+int circle1_position_y = 100;
+int circle1_radius = 10;
+
+
+
+int other_circle_radius = 20;
+
+
+int circle_pos_x_difference = 40;
+int circle_pos_y_difference = 40;
+int circle_speed = 40;
+
+//boolean bool1 = true;
+
+int arr_x[100];
+int arr_y[100];
+
+
+boolean gotoright = false;
+boolean gotoleft = false;
+boolean gotoup = false;
+boolean gotodown = false;
+
+
+int food_width = 50;
+int food_height = 50;
+int food_image_position_x = rand() % (win_w - food_width);
+int food_image_position_y = rand() % (win_h - food_height);
+int food_image_position_x_new_x = food_image_position_x + food_width;
+int food_image_position_y_new_y = food_image_position_y + food_height;
+
+
+
+int special_circle_food_pos_x = rand() % (win_w - food_width);
+int special_circle_food_pos_y = rand() % (win_h - food_height);
+
+int special_circle_food_pos_x_new_x = special_circle_food_pos_x - 20;
+int special_circle_food_pos_y_new_y = special_circle_food_pos_y - 20;
+int special_circle_food_pos_x_new_x_new_x = special_circle_food_pos_x_new_x + 40;
+int special_circle_food_pos_y_new_y_new_y = special_circle_food_pos_y_new_y + 40;
+
+
+
+
+int r1, r2, r3, g1, g2, g3, b1, b2, b3;
+
+
+
+
+void ColorChange(){
+	r1 = rand() % 255;
+	r2 = rand() % 255;
+	g1 = rand() % 255;
+	g2 = rand() % 255;
+	b1 = rand() % 255;
+	b2 = rand() % 255;
+
+}
+
+void food_randomly_go(){
+
+
+	food_image_position_x = rand() % (win_w - food_width);
+	food_image_position_y = rand() % (550 - food_height);
+
+	food_image_position_x_new_x = food_image_position_x + food_width;
+	food_image_position_y_new_y = food_image_position_y + food_height;
+
+	
+	counter_for_sp_food++;
+	counter_for_special_circle_food++;
+
+	if (counter_for_sp_food == 5){
+		counter_for_sp_food = 1;
+	}
+
+	if (counter_for_special_circle_food == 8){
+		counter_for_special_circle_food = 1;
+	}
+
+
+	//printf("%d",999999);
+	
+
+
+
+
+}
+
+
+
+
+
+
+
+void length_increase(){
+	k++;
+	i = k;
+
+	arr_x[k + 1] = arr_x[k]; 
+		arr_y[k + 1] = arr_y[k];
+	
+	flag = 1;
+
+	
+}
+
+
+int flag_for_food_for_level_1 = 0;
+
+
+void snake_move()
+
+{
+
+
+	
+
+		if (gotoright)
+		{
+			i = k;
+
+			for (; i >= 0; i--)
+			{
+
+				arr_x[i + 1] = arr_x[i];
+				arr_y[i + 1] = arr_y[i];
+
+			}
+
+			printf("%d", 22222);
+
+			snake_head_cobra_right_pos_x += 40;
+			flag_snake_head_cobra_left = 0;
+			flag_snake_head_cobra_up = 0;
+			flag_snake_head_cobra_down = 0;
+			flag_snake_head_cobra_right = 1;
+
+			arr_x[0] += circle_speed;
+		}
+
+
+
+		else if (gotoleft)
+		{
+			i = k;
+
+			for (; i >= 0; i--)
+			{
+
+				arr_x[i + 1] = arr_x[i];
+				arr_y[i + 1] = arr_y[i];
+
+			}
+			snake_head_cobra_right_pos_x -= 40;
+
+			flag_snake_head_cobra_left = 1;
+			flag_snake_head_cobra_up = 0;
+			flag_snake_head_cobra_down = 0;
+			flag_snake_head_cobra_right = 0;
+
+			arr_x[0] -= circle_speed;
+
+		}
+		else if (gotoup)
+		{
+			i = k;
+
+			for (; i >= 0; i--)
+			{
+
+				arr_x[i + 1] = arr_x[i];
+				arr_y[i + 1] = arr_y[i];
+
+			}
+			snake_head_cobra_right_pos_y += 40;
+
+			flag_snake_head_cobra_left = 0;
+			flag_snake_head_cobra_up = 1;
+			flag_snake_head_cobra_down = 0;
+			flag_snake_head_cobra_right = 0;
+
+			arr_y[0] += circle_speed;
+		}
+
+		else if (gotodown){
+
+			i = k;
+
+			for (; i >= 0; i--)
+			{
+
+				arr_x[i + 1] = arr_x[i];
+				arr_y[i + 1] = arr_y[i];
+
+			}
+
+			snake_head_cobra_right_pos_y -= 40;
+
+			flag_snake_head_cobra_left = 0;
+			flag_snake_head_cobra_up = 0;
+			flag_snake_head_cobra_down = 1;
+			flag_snake_head_cobra_right = 0;
+
+			arr_y[0] -= circle_speed;
+		}
+
+
+
+	
+}
+
+
+
+
+
+
+void touch_itself(){
+
+
+	for (int z = 1; z <= foodCounter; z++){
+
+		if ((arr_x[0] == arr_x[z + 2]) && (arr_y[0] == arr_y[z + 2])) {
+
+
+
+
+		gotoright = false;
+		gotoleft = false;
+		gotoup = false;
+		gotodown = false;
+
+		arr_x[0] = circle1_position_x;
+		arr_x[1] = circle1_position_x - circle_pos_x_difference;
+		arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+		arr_y[0] = circle1_position_y;
+		arr_y[1] = circle1_position_y;
+		arr_y[2] = circle1_position_y;
+
+
+		flag = 0;
+		i = 0;
+		k = 1;
+
+		mint = 2;
+		sec = 0;
+
+		foodCounter = 0;
+		counter_for_sp_food = 0;
+		counter_for_special_circle_food = 0;
+		
+
+		forFood = 15;
+
+		lifeCounter++;
+		if (lifeCounter == 1){
+			for_first_life = 0;
+			counter_for_show_game_over++;
+		}
+		else if (lifeCounter == 2){
+			for_second_life = 0;
+			counter_for_show_game_over++;
+		}
+		else if (lifeCounter == 3){
+			for_third_life = 0;
+			counter_for_show_game_over++;
+		}
+
+		
+
+
+
+		 snake_head_cobra_right_pos_x = 155;
+		 snake_head_cobra_right_pos_y = 75;
+
+		 flag_snake_head_cobra_left = 0;
+		 flag_snake_head_cobra_up = 0;
+		 flag_snake_head_cobra_down = 0;
+		 flag_snake_head_cobra_right = 1;
+
+
+
+
+}
+	}
+
+
+
+}
+
+
+
+
+
+
+int c;
+
+
+
+
+
+
+
+
+
+
+ void for_circles_color(){
+	 r3 = rand() % 255;
+	 g3 = rand() % 255;	 
+	 b3 = rand() % 255;
+	
+}
+
+ char str[1000];
+
+ /*food_image_position_x = rand() % (win_w - food_width);
+ food_image_position_y = rand() % (550 - food_height);
+
+ food_image_position_x_new_x = food_image_position_x + food_width;
+ food_image_position_y_new_y = food_image_position_y + food_height;*/
+
+ //special food method is below
+
+
+ int special_food_x_pos = rand() % (win_w - food_width);
+	 int special_food_y_pos = rand() % (550 - food_height);
+ int special_food_x_new_x = special_food_x_pos + 50;
+ int special_food_y_new_y = special_food_y_pos + 50;
+
+
+
+ int special_food_opening_method = 0;
+int special_food_flag = 0;
+int special_food_sec_counter = 5;
+int flag_when_sp_food_visible = 0;
+
+ void for_special_food(){
+	 if (special_food_opening_method == 1){
+		 special_food_flag = 1;
+		 special_food_sec_counter--;
+
+		/* if (counter_for_sp_food == 4){
+			 flag_when_sp_food_visible = 1;
+
+			 special_food_opening_method = 1;
+		*/
+
+
+
+		 if (special_food_sec_counter == 0){
+
+			 
+			 special_food_flag = 0;
+			 special_food_opening_method = 0;
+			 counter_for_sp_food = 0;
+			 special_food_sec_counter = 5;
+			 flag_when_sp_food_visible = 0;
+			  special_food_x_pos = rand() % (win_w - food_width);
+			  special_food_y_pos = rand() % (550 - food_height);
+			  special_food_x_new_x = special_food_x_pos + 50;
+			  special_food_y_new_y = special_food_y_pos + 50;
+			 
+		 }
+	 }
+ }
+
+
+ int totalCircle = 0;
+ int deletingCircles = 0;
+
+
+
+
+ int flag_for_deleting_circle = 0;
+
+
+
+
+
+
+ 
+ void for_time(){
+	
+	 if (forTime==1){
+
+		 if (mint==2 && sec == 0){
+			 mint--;
+			 sec = 59;
+		 }
+
+
+		 else if (mint == 1 && sec == 0){
+			 mint--;
+			 sec = 59;
+		 }
+
+		 else if (mint == 1){
+			 sec--;
+		 }
+		
+
+		 else if (mint == 0){
+			 sec--;
+		 }
+		 
+		 if (mint == 0 && sec == 0){
+			 counter_for_show_game_over = 3;
+			 level_1_for_draw = 0;
+			 level_2_for_draw = 0;
+			 final_level_for_draw = 0;
+		 }
+
+
+
+	 }
+
+ }
+ int flag1_for_special_circle_food = 0;
+ int flag_for_special_circle_food_sec_counter = 15;
+ int flag_which_shows_special_food_circle = 0;
+ int flag_for_on_off_special_circle_food = 0;
+
+ void special_circle_food_method(){
+
+
+
+	 if (flag1_for_special_circle_food == 1){
+
+		 flag_which_shows_special_food_circle = 1;
+		 
+		 flag_for_special_circle_food_sec_counter--;
+
+		 if (flag_for_special_circle_food_sec_counter == 0){
+			 flag_which_shows_special_food_circle = 0;
+			 counter_for_special_circle_food = 0;
+			 flag_for_on_off_special_circle_food = 0;
+
+			
+
+			 flag_for_special_circle_food_sec_counter = 15;
+			 flag1_for_special_circle_food = 0;
+
+			 special_circle_food_pos_x = rand() % (win_w - food_width);
+			  special_circle_food_pos_y = rand() % (win_h - food_height);
+
+			 special_circle_food_pos_x_new_x = special_circle_food_pos_x - 20;
+			 special_circle_food_pos_y_new_y = special_circle_food_pos_y - 20;
+			 special_circle_food_pos_x_new_x_new_x = special_circle_food_pos_x_new_x + 40;
+			 special_circle_food_pos_y_new_y_new_y = special_circle_food_pos_y_new_y + 40;
+
+		 }
+
+
+
+	 }
+ }
+
+
+
+
+
+
+
+ void side_in_out(){
+
+	
+
+	 if (arr_x[0] >= 1299){
+		 arr_x[0] = 25;
+		 snake_head_cobra_right_pos_x = 0;
+	 }
+
+	 else if (arr_x[0] <= 1){
+		 arr_x[0] = 1275;
+		 snake_head_cobra_right_pos_x = 1250;
+	 }
+	 else if (arr_y[0] <= 1){
+		 arr_y[0] = 525;
+		 snake_head_cobra_right_pos_y = 500;
+	 }
+	 else if (arr_y[0] >= 554){
+		 arr_y[0] = 25;
+		 snake_head_cobra_right_pos_y = 0;
+	 }
+
+
+
+
+
+	 
+
+ }
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+/*
+	function iDraw() is called again and again by the system.
+*/
+
+ void iDraw()
+ {
+	 //place your drawing codes here
+	 iClear();
+
+
+	 if (counter_for_show_game_over == 3){
+		 flag1_for_menu = 0;
+		 level_1_for_draw = 0;
+		 level_2_for_draw = 0;
+		 final_level_for_draw = 0;
+		 forFood = 15;
+		 forTime = 0;
+		 flag_when_menu_snake_move_not_possible = 0;
+		 Showing_congratulations_background = 0;
+		 iShowBMP(0, 0, "game_over_image1.bmp");
+		 iSetColor(255, 255, 255);
+		 iText(500, 500, "* Press 'M' for Menu *", GLUT_BITMAP_TIMES_ROMAN_24);
+	 }
+
+
+
+
+
+	 if (flag1_for_menu == 1){
+
+
+		 iShowBMP(0, 0, "snake_menu_background.bmp");
+		 iShowBMP2(100, 200, "snake_white.bmp", 0);
+		 iShowBMP2(900, 200, "snake_white.bmp", 0);
+
+		 iSetColor(0, 255, 0);
+		 iRectangle(600, 400, 100, 50);
+		 iText(625, 420, "Play", GLUT_BITMAP_TIMES_ROMAN_24);
+
+		 iRectangle(580, 300, 150, 50);
+		 iText(600, 320, "High Score", GLUT_BITMAP_TIMES_ROMAN_24);
+
+		 iRectangle(600, 200, 100, 50);
+		 iText(625, 220, "Quit", GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+		 forPoint = 0;
+		 //printf("%d", 1234);
+
+	 }
+
+
+
+
+
+	 if (level_1_for_draw == 1)
+	 {
+
+		 //flag_for_food_for_level_1 = 1;
+
+
+		 iShowBMP(0, 0, "snake_game_final_background_level_pic.bmp");
+		 iShowBMP2(food_image_position_x, food_image_position_y, "snake_food.bmp", 0);
+
+
+		 if (for_first_life == 1){
+			 iShowBMP2(330, 560, "snake_life_image1.bmp", 0);
+		 }
+		 if (for_second_life == 1){
+			 iShowBMP2(290, 560, "snake_life_image1.bmp", 0);
+		 }
+		 if (for_third_life == 1){
+			 iShowBMP2(250, 560, "snake_life_image1.bmp", 0);
+		 }
+
+		 printf("%d", 111111111112111);
+
+
+
+
+		 iSetColor(255, 255, 255);
+		 iLine(4, 550, 1296, 550);
+
+		 iSetColor(255, 0, 0);
+		 iFilledCircle(arr_x[0], arr_y[0], circle1_radius);
+
+		 iSetColor(r1, g1, b1);
+		 iFilledCircle(arr_x[1], arr_y[1], other_circle_radius);
+
+		 iSetColor(r2, g2, b2);
+		 iFilledCircle(arr_x[2], arr_y[2], other_circle_radius);
+
+		 iSetColor(255, 255, 255);
+		 iText(1150, 570, "Score:", GLUT_BITMAP_TIMES_ROMAN_24);
+		 iText(10, 570, "Level-1", GLUT_BITMAP_TIMES_ROMAN_24);
+		 iText(200, 570, "Life:", GLUT_BITMAP_TIMES_ROMAN_24);
+
+		 iText(1030, 570, "Food:", GLUT_BITMAP_TIMES_ROMAN_24);
+		 iSetColor(0, 255, 0);
+		 iText(800, 570, "Press 'Q' to Quit", GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+		 iSetColor(255, 0, 0);
+		 iText(550, 570, "Time:", GLUT_BITMAP_TIMES_ROMAN_24);
+		 iText(650, 570, ":", GLUT_BITMAP_TIMES_ROMAN_24);
+		 _itoa_s(mint, str, 10);
+		 iText(630, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+		 _itoa_s(sec, str, 10);
+		 iText(660, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+
+		 iSetColor(255, 255, 255);
+
+		 _itoa_s(forPoint, str, 10);
+		 iText(1215, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+		 _itoa_s(forFood, str, 10);
+		 iText(1100, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+		 //**************************
+		 if (flag_snake_head_cobra_right == 1){
+			 iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_right.bmp", 0);
+		 }
+		 else if (flag_snake_head_cobra_left == 1){
+			 iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_left.bmp", 0);
+		 }
+		 else if (flag_snake_head_cobra_up == 1){
+			 iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_up.bmp", 0);
+		 }
+		 else if (flag_snake_head_cobra_down == 1){
+			 iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_down.bmp", 0);
+		 }
+
+
+		 if (arr_x[0] >= food_image_position_x && arr_x[0] <= food_image_position_x_new_x && arr_y[0] >= food_image_position_y && arr_y[0] <= food_image_position_y_new_y) {
+			 food_randomly_go();
+			 length_increase();
+
+			
+			
+			 printf("%d",999);
+
+			 foodCounter++;
+
+			 forPoint += 10;
+
+			 forFood--;
+
+			 
+
+
+
+
+
+			 if (forFood == 0){
+
+				 level_1_for_draw = 0;
+				 final_level_for_draw = 0;
+				 level_2_for_draw = 1;
+				 flag_for_level2_snake_initial_pos = 1;
+
+			 }
+
+
+
+		 }
+
+		 if (flag_when_sp_food_visible == 1){
+			 if (arr_x[0] >= special_food_x_pos && arr_x[0] <= special_food_x_new_x && arr_y[0] >= special_food_y_pos && arr_y[0] <= special_food_y_new_y){
+
+				 forPoint += 50;
+				 //special_food_sec_counter = 0;
+				 special_food_opening_method = 0;
+				 counter_for_sp_food = 0;
+				 flag_when_sp_food_visible = 0;
+
+
+
+				 special_food_flag = 0;
+
+
+				 special_food_sec_counter = 5;
+
+				 special_food_x_pos = rand() % (win_w - food_width);
+				 special_food_y_pos = rand() % (550 - food_height);
+				 special_food_x_new_x = special_food_x_pos + 50;
+				 special_food_y_new_y = special_food_y_pos + 50;
+
+
+			 }
+		 }
+
+
+		 if (counter_for_sp_food == 4){
+			 flag_when_sp_food_visible = 1;
+
+			 special_food_opening_method = 1;
+
+			 //for_special_food();
+			 if (special_food_flag == 1){
+
+				 iSetColor(0, 255, 0);
+				 iText(475, 570, ":", GLUT_BITMAP_TIMES_ROMAN_24);
+				 _itoa_s(0, str, 10);
+				 iText(460, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+				 _itoa_s(special_food_sec_counter, str, 10);
+				 iText(485, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+				 iShowBMP2(special_food_x_pos, special_food_y_pos, "special_food_2.bmp", 0);
+
+
+			 }
+		 }
+
+
+		 iSetColor(255, 255, 255);
+		 iLine(1, 1, 1299, 1);
+		 iLine(1, 1, 1, 554);
+		 iLine(1299, 1, 1299, 554);
+
+
+
+		 side_in_out();
+
+
+
+	
+
+
+
+		 touch_itself();
+
+
+
+
+
+
+		 if (flag == 1){
+			 j = k;
+			 for (; k >= 2; k--){
+				 for_circles_color();
+				 iSetColor(r3, g3, b3);
+				 iFilledCircle(arr_x[k + 1], arr_y[k + 1], other_circle_radius);
+
+			 }
+			 k = j;
+		 }
+
+
+
+
+
+		/* int flag1_for_special_circle_food = 0;
+		 int flag_for_special_circle_food_sec_counter = 5;
+		 int flag_which_shows_special_food_circle = 0;
+		 int flag_for_on_off_special_circle_food = 0;
+
+		 void special_circle_food_method(){
+
+
+
+			 if (flag1_for_special_circle_food == 1){
+
+				 flag_which_shows_special_food_circle = 1;
+
+				 flag_for_special_circle_food_sec_counter--;
+
+				 if (flag_for_special_circle_food_sec_counter == 0){
+					 flag_which_shows_special_food_circle = 0;
+					 counter_for_special_circle_food = 0;
+					 flag_for_on_off_special_circle_food = 0;
+
+
+
+					 flag_for_special_circle_food_sec_counter = 5;
+					 flag1_for_special_circle_food = 0;
+
+					 special_circle_food_pos_x = rand() % (win_w - food_width);
+					 special_circle_food_pos_y = rand() % (win_h - food_height);
+				 }
+
+
+
+			 }
+		 }*/
+
+
+
+		 // for special_circle_food
+		
+		 if (counter_for_special_circle_food == 7){
+			 printf("%d", 5555);
+			 flag_for_on_off_special_circle_food = 1;
+			 flag1_for_special_circle_food = 1;
+			 if (flag_which_shows_special_food_circle == 1){
+				 iSetColor(0, 255, 0);
+				 iText(475, 570, ":", GLUT_BITMAP_TIMES_ROMAN_24);
+				 _itoa_s(0, str, 10);
+				 iText(460, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+				 _itoa_s(flag_for_special_circle_food_sec_counter, str, 10);
+				 iText(485, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+				 iFilledCircle(special_circle_food_pos_x, special_circle_food_pos_y, 20);
+			 }
+
+		 }
+		 if (flag_for_on_off_special_circle_food == 1){
+
+			 if (arr_x[0] >= (special_circle_food_pos_x - 20) && arr_x[0] <= ((special_circle_food_pos_x - 20) + 40) &&
+				 arr_y[0] >= (special_circle_food_pos_y - 20) && arr_y[0] <= ((special_circle_food_pos_y - 20) + 40))
+			 {
+
+				 flag_for_special_circle_food_sec_counter = 15;
+
+				 flag_which_shows_special_food_circle = 0;
+				 counter_for_special_circle_food = 0;
+				 flag_for_on_off_special_circle_food = 0;
+
+				 flag1_for_special_circle_food = 0;
+
+				 special_circle_food_pos_x = rand() % (win_w - food_width);
+				 special_circle_food_pos_y = rand() % (win_h - food_height);
+
+				 special_circle_food_pos_x_new_x = special_circle_food_pos_x - 20;
+				 special_circle_food_pos_y_new_y = special_circle_food_pos_y - 20;
+				 special_circle_food_pos_x_new_x_new_x = special_circle_food_pos_x_new_x + 40;
+				 special_circle_food_pos_y_new_y_new_y = special_circle_food_pos_y_new_y + 40;
+
+
+				 printf("%d", 88888888888888888);
+				 k = k - deletingCircles;
+
+				 foodCounter -= deletingCircles;
+				 forPoint += 200;
+			 }
+
+		 }
+
+
+
+		 totalCircle = foodCounter + 3;
+		 deletingCircles = totalCircle / 3;
+
+		 //printf("%d", 10000);
+
+
+
+
+
+
+
+
+
+
+
+
+	 }
+
+
+	 if (level_2_for_draw == 1)
+
+	 {
+
+		 if (flag_for_level2_snake_initial_pos == 1){
+
+
+			 snake_head_cobra_right_pos_x = 155;
+			 snake_head_cobra_right_pos_y = 75;
+
+			 special_circle_food_pos_x = rand() % (win_w - food_width);
+			 special_circle_food_pos_y = rand() % (win_h - food_height);
+
+			 special_circle_food_pos_x_new_x = special_circle_food_pos_x - 20;
+			 special_circle_food_pos_y_new_y = special_circle_food_pos_y - 20;
+			 special_circle_food_pos_x_new_x_new_x = special_circle_food_pos_x_new_x + 40;
+			 special_circle_food_pos_y_new_y_new_y = special_circle_food_pos_y_new_y + 40;
+
+
+			 flag_snake_head_cobra_left = 0;
+			 flag_snake_head_cobra_up = 0;
+			 flag_snake_head_cobra_down = 0;
+			 flag_snake_head_cobra_right = 1;
+
+			 //flag_for_food_for_level_1 = 0;
+			 mint = 2;
+			 sec = 0;
+			 counter_for_sp_food = 0;
+			 counter_for_special_circle_food = 0;
+
+			 k = 1;
+			 forFood = 15;
+			 flag = 0;
+			 i = 0;
+			 foodCounter = 0;
+
+			 arr_x[0] = circle1_position_x;
+			 arr_x[1] = circle1_position_x - circle_pos_x_difference;
+			 arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+			 arr_y[0] = circle1_position_y;
+			 arr_y[1] = circle1_position_y;
+			 arr_y[2] = circle1_position_y;
+
+			 flag_for_level2_snake_initial_pos = 0;
+			 gotoright = false;
+			 gotoleft = false;
+			 gotoup = false;
+			 gotodown = false;
+
+		 }
+
+		 //obstacle_working_flag = 1;
+
+
+		 if (forFoodTemp == forFood){
+			 level_2_for_draw = 0;
+			 final_level_for_draw = 1;
+			 flag_for_final_level_snake_initial_pos = 1;
+
+		 }
+
+		 iShowBMP(0, 0, "snake_game_level2_background_image.bmp");
+		 iShowBMP2(food_image_position_x, food_image_position_y, "snake_food.bmp", 0);
+
+
+		 if (for_first_life == 1){
+			 iShowBMP2(330, 560, "snake_life_image1.bmp", 0);
+		 }
+		 if (for_second_life == 1){
+			 iShowBMP2(290, 560, "snake_life_image1.bmp", 0);
+		 }
+		 if (for_third_life == 1){
+			 iShowBMP2(250, 560, "snake_life_image1.bmp", 0);
+		 }
+
+
+		 iSetColor(255, 255, 255);
+		 iLine(4, 550, 1296, 550);
+
+		 iSetColor(255, 0, 0);
+		 iFilledCircle(arr_x[0], arr_y[0], circle1_radius);
+
+		 iSetColor(r1, g1, b1);
+		 iFilledCircle(arr_x[1], arr_y[1], other_circle_radius);
+
+		 iSetColor(r2, g2, b2);
+		 iFilledCircle(arr_x[2], arr_y[2], other_circle_radius);
+
+		 iSetColor(255, 255, 255);
+		 iText(1150, 570, "Score:", GLUT_BITMAP_TIMES_ROMAN_24);
+		 iText(10, 570, "Level-2", GLUT_BITMAP_TIMES_ROMAN_24);
+		 iText(200, 570, "Life:", GLUT_BITMAP_TIMES_ROMAN_24);
+
+		 iText(1030, 570, "Food:", GLUT_BITMAP_TIMES_ROMAN_24);
+		 iSetColor(0, 255, 0);
+		 iText(800, 570, "Press 'Q' to Quit", GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+
+		 iSetColor(255, 0, 0);
+		 iText(550, 570, "Time:", GLUT_BITMAP_TIMES_ROMAN_24);
+		 iText(650, 570, ":", GLUT_BITMAP_TIMES_ROMAN_24);
+		 _itoa_s(mint, str, 10);
+		 iText(630, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+		 _itoa_s(sec, str, 10);
+		 iText(660, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+
+
+		 iSetColor(255, 255, 255);
+
+		 _itoa_s(forPoint, str, 10);
+		 iText(1215, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+		 _itoa_s(forFood, str, 10);
+		 iText(1100, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+		 if (flag_snake_head_cobra_right == 1){
+			 iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_right.bmp", 0);
+		 }
+		 else if (flag_snake_head_cobra_left == 1){
+			 iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_left.bmp", 0);
+		 }
+		 else if (flag_snake_head_cobra_up == 1){
+			 iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_up.bmp", 0);
+		 }
+		 else if (flag_snake_head_cobra_down == 1){
+			 iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_down.bmp", 0);
+		 }
+
+
+
+
+		 if (arr_x[0] >= food_image_position_x && arr_x[0] <= food_image_position_x_new_x && arr_y[0] >= food_image_position_y && arr_y[0] <= food_image_position_y_new_y) {
+			 food_randomly_go();
+			 length_increase();
+
+			 foodCounter++;
+
+			 forPoint += 10;
+
+			 forFood--;
+			 /*	if (forFood == 0 && flag_for_food_for_level_1 == 1){
+
+					 level_1_for_draw = 0;
+					 final_level_for_draw = 0;
+					 level_2_for_draw = 1;
+					 flag_for_level2_snake_initial_pos = 1;
+
+					 }*/
+
+
+
+		 }
+
+
+		 if (flag_when_sp_food_visible == 1){
+			 if (arr_x[0] >= special_food_x_pos && arr_x[0] <= special_food_x_new_x && arr_y[0] >= special_food_y_pos && arr_y[0] <= special_food_y_new_y){
+
+				 forPoint += 100;
+				 //special_food_sec_counter = 0;
+				 special_food_opening_method = 0;
+				 counter_for_sp_food = 0;
+				 flag_when_sp_food_visible = 0;
+
+
+
+				 special_food_flag = 0;
+
+
+				 special_food_sec_counter = 5;
+
+				 special_food_x_pos = rand() % (win_w - food_width);
+				 special_food_y_pos = rand() % (550 - food_height);
+				 special_food_x_new_x = special_food_x_pos + 50;
+				 special_food_y_new_y = special_food_y_pos + 50;
+
+
+			 }
+		 }
+
+
+		 if (counter_for_sp_food == 4){
+			 flag_when_sp_food_visible = 1;
+
+			 special_food_opening_method = 1;
+
+			 //for_special_food();
+			 if (special_food_flag == 1){
+
+				 iSetColor(0, 255, 0);
+				 iText(475, 570, ":", GLUT_BITMAP_TIMES_ROMAN_24);
+				 _itoa_s(0, str, 10);
+				 iText(460, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+				 _itoa_s(special_food_sec_counter, str, 10);
+				 iText(485, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+				 iShowBMP2(special_food_x_pos, special_food_y_pos, "special_food_2.bmp", 0);
+
+
+			 }
+		 }
+
+		
+
+		 if ((special_food_x_pos >= 40 && special_food_x_pos <= 440 && special_food_y_pos >= 260 && special_food_y_pos <= 410) ||
+			 (special_food_x_pos >= 440 && special_food_x_pos <= 590 && special_food_y_pos >= 40 && special_food_y_pos <= 530) ||
+			 (special_food_x_pos >= 790 && special_food_x_pos <= 940 && special_food_y_pos >= 40 && special_food_y_pos <= 530) ||
+			 (special_food_x_pos >= 920 && special_food_x_pos <= 1350 && special_food_y_pos >= 260 && special_food_y_pos <= 410)){
+
+			 special_food_x_pos = rand() % (win_w - food_width);
+			 special_food_y_pos = rand() % (550 - food_height);
+
+			
+
+		 }
+
+
+
+
+
+
+
+
+
+
+		 if ((food_image_position_x >= 40 && food_image_position_x <= 390 && food_image_position_y >= 260 && food_image_position_y <= 360) ||
+			 (food_image_position_x >= 440 && food_image_position_x <= 540 && food_image_position_y >= 40 && food_image_position_y <= 480) ||
+			 (food_image_position_x >= 790 && food_image_position_x <= 890 && food_image_position_y >= 40 && food_image_position_y <= 480) ||
+			 (food_image_position_x >= 920 && food_image_position_x <= 1300 && food_image_position_y >= 260 && food_image_position_y <= 360)){
+
+			 food_image_position_x = rand() % (win_w - food_width);
+			 food_image_position_y = rand() % (550 - food_height);
+
+			 food_image_position_x_new_x = food_image_position_x + food_width;
+			 food_image_position_y_new_y = food_image_position_y + food_height;
+
+
+		 }
+
+
+
+		 iSetColor(255, 255, 255);
+		 iLine(1, 1, 1299, 1);
+		 iLine(1, 1, 1, 554);
+		 iLine(1299, 1, 1299, 554);
+
+
+
+
+
+		 if ((arr_x[0] >= 1299) || (arr_x[0] <= 1) || (arr_y[0] <= 1) || (arr_y[0] >= 554)){
+
+			 mint = 2;
+			 sec = 0;
+			 counter_for_sp_food = 0;
+			 counter_for_special_circle_food = 0;
+
+			 gotoright = false;
+			 gotoleft = false;
+			 gotoup = false;
+			 gotodown = false;
+
+			 arr_x[0] = circle1_position_x;
+			 arr_x[1] = circle1_position_x - circle_pos_x_difference;
+			 arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+			 arr_y[0] = circle1_position_y;
+			 arr_y[1] = circle1_position_y;
+			 arr_y[2] = circle1_position_y;
+
+
+
+			 lifeCounter++;
+			 if (lifeCounter == 1){
+				 for_first_life = 0;
+				 counter_for_show_game_over++;
+			 }
+			 else if (lifeCounter == 2){
+				 for_second_life = 0;
+				 counter_for_show_game_over++;
+			 }
+			 else if (lifeCounter == 3){
+				 for_third_life = 0;
+				 counter_for_show_game_over++;
+			 }
+
+
+
+
+
+
+
+
+
+
+			 flag = 0;
+			 i = 0;
+			 k = 1;
+
+			 foodCounter = 0;
+
+			 forFood = 15;
+
+
+
+			 snake_head_cobra_right_pos_x = 155;
+			 snake_head_cobra_right_pos_y = 75;
+
+			 flag_snake_head_cobra_left = 0;
+			 flag_snake_head_cobra_up = 0;
+			 flag_snake_head_cobra_down = 0;
+			 flag_snake_head_cobra_right = 1;
+
+
+
+
+
+		 }
+
+
+
+
+		 touch_itself();
+
+
+		 if (flag == 1){
+			 j = k;
+			 for (; k >= 2; k--){
+				 for_circles_color();
+				 iSetColor(r3, g3, b3);
+				 iFilledCircle(arr_x[k + 1], arr_y[k + 1], other_circle_radius);
+
+			 }
+			 k = j;
+		 }
+
+
+
+
+
+		 iSetColor(255, 128, 0);
+		 iFilledRectangle(90, 310, 300, 50);
+		 iFilledRectangle(490, 90, 50, 390);
+		 iFilledRectangle(840, 90, 50, 390);
+		 iFilledRectangle(970, 310, 300, 50);
+
+
+
+		 if ((arr_x[0] >= 90 && arr_x[0] <= 390 && arr_y[0] >= 310 && arr_y[0] <= 360) || (arr_x[0] >= 490 && arr_x[0] <= 540 && arr_y[0] >= 90 && arr_y[0] <= 480) ||
+			 (arr_x[0] >= 840 && arr_x[0] <= 890 && arr_y[0] >= 90 && arr_y[0] <= 480) || (arr_x[0] >= 970 && arr_x[0] <= 1270 && arr_y[0] >= 310 && arr_y[0] <= 360))  {
+
+			 mint = 2;
+			 sec = 0;
+			 counter_for_sp_food = 0;
+			 counter_for_special_circle_food = 0;
+
+			 gotoright = false;
+			 gotoleft = false;
+			 gotoup = false;
+			 gotodown = false;
+
+			 arr_x[0] = circle1_position_x;
+			 arr_x[1] = circle1_position_x - circle_pos_x_difference;
+			 arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+			 arr_y[0] = circle1_position_y;
+			 arr_y[1] = circle1_position_y;
+			 arr_y[2] = circle1_position_y;
+
+
+			 flag = 0;
+			 i = 0;
+			 k = 1;
+
+
+			 foodCounter = 0;
+
+
+
+			 forFood = 15;
+
+			 lifeCounter++;
+			 if (lifeCounter == 1){
+				 for_first_life = 0;
+				 counter_for_show_game_over++;
+			 }
+			 else if (lifeCounter == 2){
+				 for_second_life = 0;
+				 counter_for_show_game_over++;
+			 }
+			 else if (lifeCounter == 3){
+				 for_third_life = 0;
+				 counter_for_show_game_over++;
+			 }
+
+
+			 snake_head_cobra_right_pos_x = 155;
+			 snake_head_cobra_right_pos_y = 75;
+
+			 flag_snake_head_cobra_left = 0;
+			 flag_snake_head_cobra_up = 0;
+			 flag_snake_head_cobra_down = 0;
+			 flag_snake_head_cobra_right = 1;
+
+
+
+
+
+
+		 }
+
+
+
+
+		 // for special_circle_food
+
+		 if (counter_for_special_circle_food == 7){
+			 flag_for_on_off_special_circle_food = 1;
+			 flag1_for_special_circle_food = 1;
+			 if (flag_which_shows_special_food_circle == 1){
+				 iSetColor(0, 255, 0);
+				 iText(475, 570, ":", GLUT_BITMAP_TIMES_ROMAN_24);
+				 _itoa_s(0, str, 10);
+				 iText(460, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+				 _itoa_s(flag_for_special_circle_food_sec_counter, str, 10);
+				 iText(485, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+				 iFilledCircle(special_circle_food_pos_x, special_circle_food_pos_y, 20);
+			 }
+
+		 }
+		 if (flag_for_on_off_special_circle_food == 1){
+
+			 if (arr_x[0] >= (special_circle_food_pos_x - 20) && arr_x[0] <= ((special_circle_food_pos_x - 20) + 40) &&
+				 arr_y[0] >= (special_circle_food_pos_y - 20) && arr_y[0] <= ((special_circle_food_pos_y - 20) + 40))
+			 {
+
+				 flag_for_special_circle_food_sec_counter = 15;
+
+				 flag_which_shows_special_food_circle = 0;
+				 counter_for_special_circle_food = 0;
+				 flag_for_on_off_special_circle_food = 0;
+
+				 flag1_for_special_circle_food = 0;
+
+				special_circle_food_pos_x = rand() % (win_w - food_width);
+				special_circle_food_pos_y = rand() % (win_h - food_height);
+
+				 special_circle_food_pos_x_new_x = special_circle_food_pos_x - 20;
+				 special_circle_food_pos_y_new_y = special_circle_food_pos_y - 20;
+				 special_circle_food_pos_x_new_x_new_x = special_circle_food_pos_x_new_x + 40;
+				 special_circle_food_pos_y_new_y_new_y = special_circle_food_pos_y_new_y + 40;
+
+
+				 printf("%d", 88888888888888888);
+				 k = k - 3;
+
+				 foodCounter -= deletingCircles;
+				 forPoint += 200;
+			 }
+
+		 }
+
+
+
+		 totalCircle = foodCounter + 3;
+		 deletingCircles = totalCircle / 3;
+
+
+
+		 if ((special_circle_food_pos_x >= 40 && special_circle_food_pos_x <= 390 && special_circle_food_pos_y >= 260 && special_circle_food_pos_y <= 360) ||
+			 (special_circle_food_pos_x >= 440 && special_circle_food_pos_x <= 540 && special_circle_food_pos_y >= 40 && special_circle_food_pos_y <= 480) ||
+			 (special_circle_food_pos_x >= 790 && special_circle_food_pos_x <= 890 && special_circle_food_pos_y >= 40 && special_circle_food_pos_y <= 480) ||
+			 (special_circle_food_pos_x >= 920 && special_circle_food_pos_x <= 1300 && special_circle_food_pos_y >= 260 && special_circle_food_pos_y <= 360)){
+
+			 special_circle_food_pos_x_new_x = rand() % (win_w - food_width);
+			 special_circle_food_pos_y_new_y = rand() % (550 - food_height);
+
+			 special_circle_food_pos_x_new_x_new_x = special_circle_food_pos_x_new_x + 40;
+			 special_circle_food_pos_y_new_y_new_y = special_circle_food_pos_y_new_y + 40;
+
+
+		 }
+
+
+		 //printf("%d", 10000);
+
+
+
+
+
+
+
+
+
+
+
+
+	 }
+
+
+
+
+
+
+		if (final_level_for_draw == 1)
+		{
+
+			if (flag_for_final_level_snake_initial_pos == 1){
+
+				snake_head_cobra_right_pos_x = 155;
+				snake_head_cobra_right_pos_y = 75;
+
+				flag_snake_head_cobra_left = 0;
+				flag_snake_head_cobra_up = 0;
+				flag_snake_head_cobra_down = 0;
+				flag_snake_head_cobra_right = 1;
+
+				counter_for_sp_food = 0;
+				counter_for_special_circle_food = 0;
+				k = 1;
+				forFood = 15;
+				flag = 0;
+				i = 0;
+				foodCounter = 0;
+
+				mint = 2;
+				sec = 0;
+
+				arr_x[0] = circle1_position_x;
+				arr_x[1] = circle1_position_x - circle_pos_x_difference;
+				arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+				arr_y[0] = circle1_position_y;
+				arr_y[1] = circle1_position_y;
+				arr_y[2] = circle1_position_y;
+
+				flag_for_final_level_snake_initial_pos = 0;
+				gotoright = false;
+				gotoleft = false;
+				gotoup = false;
+				gotodown = false;
+
+			}
+
+			//obstacle_working_flag = 2;
+
+
+			if (forFoodTempFinal == forFood){
+				final_level_for_draw = 0;
+				Showing_congratulations_background = 1;
+			}
+
+
+			iShowBMP(0, 0, "final_level_background_image.bmp");
+			iShowBMP2(food_image_position_x, food_image_position_y, "snake_food.bmp", 0);
+
+
+			if (for_first_life == 1){
+				iShowBMP2(330, 560, "snake_life_image1.bmp", 0);
+			}
+			if (for_second_life == 1){
+				iShowBMP2(290, 560, "snake_life_image1.bmp", 0);
+			}
+			if (for_third_life == 1){
+				iShowBMP2(250, 560, "snake_life_image1.bmp", 0);
+			}
+
+
+			iSetColor(255, 255, 255);
+			iLine(4, 550, 1296, 550);
+
+			iSetColor(255, 0, 0);
+			iFilledCircle(arr_x[0], arr_y[0], circle1_radius);
+
+			iSetColor(r1, g1, b1);
+			iFilledCircle(arr_x[1], arr_y[1], other_circle_radius);
+
+			iSetColor(r2, g2, b2);
+			iFilledCircle(arr_x[2], arr_y[2], other_circle_radius);
+
+			iSetColor(255, 255, 255);
+			iText(1150, 570, "Score:", GLUT_BITMAP_TIMES_ROMAN_24);
+			iText(10, 570, "* Final Level *", GLUT_BITMAP_TIMES_ROMAN_24);
+			iText(200, 570, "Life:", GLUT_BITMAP_TIMES_ROMAN_24);
+			
+			iText(1030, 570, "Food:", GLUT_BITMAP_TIMES_ROMAN_24);
+			iSetColor(0, 255, 0);
+			iText(800, 570, "Press 'Q' to Quit", GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+
+			iSetColor(255, 0, 0);
+			iText(550, 570, "Time:", GLUT_BITMAP_TIMES_ROMAN_24);
+			iText(650, 570, ":", GLUT_BITMAP_TIMES_ROMAN_24);
+			_itoa_s(mint, str, 10);
+			iText(630, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+			_itoa_s(sec, str, 10);
+			iText(660, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+
+			
+			
+
+
+
+			iSetColor(255, 255, 255);
+
+			_itoa_s(forPoint, str, 10);
+			iText(1215, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+
+			_itoa_s(forFood, str, 10);
+			iText(1100, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+			
+
+			if (flag_snake_head_cobra_right == 1){
+				iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_right.bmp", 0);
+			}
+			else if (flag_snake_head_cobra_left == 1){
+				iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_left.bmp", 0);
+			}
+			else if (flag_snake_head_cobra_up == 1){
+				iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_up.bmp", 0);
+			}
+			else if (flag_snake_head_cobra_down == 1){
+				iShowBMP2(snake_head_cobra_right_pos_x, snake_head_cobra_right_pos_y, "snake_head_down.bmp", 0);
+			}
+
+
+
+
+			if (arr_x[0] >= food_image_position_x && arr_x[0] <= food_image_position_x_new_x && arr_y[0] >= food_image_position_y && arr_y[0] <= food_image_position_y_new_y) {
+				food_randomly_go();
+				length_increase();
+
+				foodCounter++;
+
+				forPoint += 10;
+
+				forFood--;
+				/*if (forFood == 0 && flag_for_food_for_level_1 == 1){
+
+					level_1_for_draw = 0;
+					final_level_for_draw = 0;
+					level_2_for_draw = 1;
+					flag_for_level2_snake_initial_pos = 1;
+
+				}*/
+
+
+
+			}
+
+
+
+
+			if (flag_when_sp_food_visible == 1){
+				if (arr_x[0] >= special_food_x_pos && arr_x[0] <= special_food_x_new_x && arr_y[0] >= special_food_y_pos && arr_y[0] <= special_food_y_new_y){
+
+					forPoint += 100;
+					//special_food_sec_counter = 0;
+					special_food_opening_method = 0;
+					counter_for_sp_food = 0;
+					flag_when_sp_food_visible = 0;
+
+
+
+					special_food_flag = 0;
+
+
+					special_food_sec_counter = 5;
+
+					special_food_x_pos = rand() % (win_w - food_width);
+					special_food_y_pos = rand() % (550 - food_height);
+					special_food_x_new_x = special_food_x_pos + 50;
+					special_food_y_new_y = special_food_y_pos + 50;
+
+
+				}
+			}
+
+
+			if (counter_for_sp_food == 4){
+				flag_when_sp_food_visible = 1;
+
+				special_food_opening_method = 1;
+
+				//for_special_food();
+				if (special_food_flag == 1){
+
+					
+					iSetColor(0, 255, 0);
+					iText(475, 570, ":", GLUT_BITMAP_TIMES_ROMAN_24);
+					_itoa_s(0, str, 10);
+					iText(460, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+					_itoa_s(special_food_sec_counter, str, 10);
+					iText(485, 570, str, GLUT_BITMAP_TIMES_ROMAN_24);
+
+					iShowBMP2(special_food_x_pos, special_food_y_pos, "special_food_2.bmp", 0);
+
+
+				}
+			}
+
+
+
+			if ((special_food_x_pos >= 20 && special_food_x_pos <= 170 && special_food_y_pos >= 380 && special_food_y_pos <= 480) ||
+				(special_food_x_pos >= 50 && special_food_x_pos <= 200 && special_food_y_pos >= 230 && special_food_y_pos <= 330) ||
+				(special_food_x_pos >= 190 && special_food_x_pos <= 340 && special_food_y_pos >= 100 && special_food_y_pos <= 200) ||
+				(special_food_x_pos >= 350 && special_food_x_pos <= 500 && special_food_y_pos >= 250 && special_food_y_pos <= 350) ||
+				(special_food_x_pos >= 390 && special_food_x_pos <= 540 && special_food_y_pos >= 30 && special_food_y_pos <= 130) ||
+				(special_food_x_pos >= 450 && special_food_x_pos <= 600 && special_food_y_pos >= 380 && special_food_y_pos <= 480) ||
+				(special_food_x_pos >= 530 && special_food_x_pos <= 680 && special_food_y_pos >= 170 && special_food_y_pos <= 270) ||
+				(special_food_x_pos >= 650 && special_food_x_pos <= 800 && special_food_y_pos >= 50 && special_food_y_pos <= 150) ||
+				(special_food_x_pos >= 750 && special_food_x_pos <= 900 && special_food_y_pos >= 250 && special_food_y_pos <= 350) ||
+				(special_food_x_pos >= 850 && special_food_x_pos <= 1000 && special_food_y_pos >= 100 && special_food_y_pos <= 200) ||
+				(special_food_x_pos >= 950 && special_food_x_pos <= 1100 && special_food_y_pos >= 380 && special_food_y_pos <= 480) ||
+				(special_food_x_pos >= 1050 && special_food_x_pos <= 1200 && special_food_y_pos >= 170 && special_food_y_pos <= 270)
+
+				){
+
+				special_food_x_pos = rand() % (win_w - food_width);
+				special_food_y_pos = rand() % (550 - food_height);
+
+				special_food_x_new_x = special_food_x_pos + food_width;
+				special_food_y_new_y = special_food_y_pos + food_height;
+
+
+
+
+			}
+
+
+
+
+
+
+
+
+
+
+			iFilledRectangle(70, 430, 100, 50);
+			iFilledRectangle(100, 280, 100, 50);
+			iFilledRectangle(240, 150, 100, 50);
+			iFilledRectangle(400, 300, 100, 50);
+			iFilledRectangle(440, 80, 100, 50);
+			iFilledRectangle(500, 430, 100, 50);
+			iFilledRectangle(580, 220, 100, 50);
+		    iFilledRectangle(700, 100, 100, 50);
+			iFilledRectangle(800, 300, 100, 50);
+			iFilledRectangle(900, 150, 100, 50);
+			iFilledRectangle(1000, 430, 100, 50);
+			iFilledRectangle(1100, 220, 100, 50);
+
+
+
+			if ((food_image_position_x >= 20 && food_image_position_x <= 170 && food_image_position_y >= 380 && food_image_position_y <= 480) ||
+				(food_image_position_x >= 50 && food_image_position_x <= 200 && food_image_position_y >= 230 && food_image_position_y <= 330) ||
+				(food_image_position_x >= 190 && food_image_position_x <= 340 && food_image_position_y >= 100 && food_image_position_y <= 200) ||
+				(food_image_position_x >= 350 && food_image_position_x <= 500 && food_image_position_y >= 250 && food_image_position_y <= 350) ||
+				(food_image_position_x >= 390 && food_image_position_x <= 540 && food_image_position_y >= 30 && food_image_position_y <= 130) ||
+				(food_image_position_x >= 450 && food_image_position_x <= 600 && food_image_position_y >= 380 && food_image_position_y <= 480) ||
+				(food_image_position_x >= 530 && food_image_position_x <= 680 && food_image_position_y >= 170 && food_image_position_y <= 270) ||
+				(food_image_position_x >= 650 && food_image_position_x <= 800 && food_image_position_y >= 50 && food_image_position_y <= 150) ||
+				(food_image_position_x >= 750 && food_image_position_x <= 900 && food_image_position_y >= 250 && food_image_position_y <= 350) ||
+				(food_image_position_x >= 850 && food_image_position_x <= 1000 && food_image_position_y >= 100 && food_image_position_y <= 200) ||
+				(food_image_position_x >= 950 && food_image_position_x <= 1100 && food_image_position_y >= 380 && food_image_position_y <= 480) ||
+				(food_image_position_x >= 1050 && food_image_position_x <= 1200 && food_image_position_y >= 170 && food_image_position_y <= 270)
+
+				){
+
+				food_image_position_x = rand() % (win_w - food_width);
+				food_image_position_y = rand() % (550 - food_height);
+
+				food_image_position_x_new_x = food_image_position_x + food_width;
+				food_image_position_y_new_y = food_image_position_y + food_height;
+
+
+
+
+			}
+
+
+
+
+			iSetColor(255, 255, 255);
+			iLine(1, 1, 1299, 1);
+			iLine(1, 1, 1, 554);
+			iLine(1299, 1, 1299, 554);
+
+
+
+
+
+			if ((arr_x[0] >= 1299) || (arr_x[0] <= 1) || (arr_y[0] <= 1) || (arr_y[0] >= 554)){
+
+				mint = 2;
+				sec = 0;
+				counter_for_sp_food = 0;
+				counter_for_special_circle_food = 0;
+
+				gotoright = false;
+				gotoleft = false;
+				gotoup = false;
+				gotodown = false;
+
+				arr_x[0] = circle1_position_x;
+				arr_x[1] = circle1_position_x - circle_pos_x_difference;
+				arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+				arr_y[0] = circle1_position_y;
+				arr_y[1] = circle1_position_y;
+				arr_y[2] = circle1_position_y;
+
+
+
+				lifeCounter++;
+				if (lifeCounter == 1){
+					for_first_life = 0;
+					counter_for_show_game_over++;
+				}
+				else if (lifeCounter == 2){
+					for_second_life = 0;
+					counter_for_show_game_over++;
+				}
+				else if (lifeCounter == 3){
+					for_third_life = 0;
+					counter_for_show_game_over++;
+				}
+
+
+
+				snake_head_cobra_right_pos_x = 155;
+				snake_head_cobra_right_pos_y = 75;
+
+				flag_snake_head_cobra_left = 0;
+				flag_snake_head_cobra_up = 0;
+				flag_snake_head_cobra_down = 0;
+				flag_snake_head_cobra_right = 1;
+
+
+
+
+
+
+				flag = 0;
+				i = 0;
+				k = 1;
+
+				foodCounter = 0;
+
+				forFood = 15;
+
+
+
+
+
+
+
+
+
+			}
+
+
+
+
+			touch_itself();
+
+
+
+
+
+
+
+
+
+
+
+			if (flag == 1){
+				j = k;
+				for (; k >= 2; k--){
+					for_circles_color();
+					iSetColor(r3, g3, b3);
+					iFilledCircle(arr_x[k + 1], arr_y[k + 1], other_circle_radius);
+
+				}
+				k = j;
+			}
+
+
+
+
+			iSetColor(255, 128, 0);
+
+			iFilledRectangle(70, 430, 100, 50);
+			iFilledRectangle(100, 280, 100, 50);
+			iFilledRectangle(240, 150, 100, 50);
+		    iFilledRectangle(400, 300, 100, 50);
+			iFilledRectangle(440, 80, 100, 50);
+		    iFilledRectangle(500, 430, 100, 50);
+			iFilledRectangle(580, 220, 100, 50);
+			iFilledRectangle(700, 100, 100, 50);
+			iFilledRectangle(800, 300, 100, 50);
+			iFilledRectangle(900, 150, 100, 50);
+			iFilledRectangle(1000, 430, 100, 50);
+			iFilledRectangle(1100, 220, 100, 50);
+
+	
+
+			if ((arr_x[0] >= 70 && arr_x[0] <= 170 && arr_y[0] >= 430 && arr_y[0] <= 480) || (arr_x[0] >= 100 && arr_x[0] <= 200 && arr_y[0] >= 280 && arr_y[0] <= 330) ||
+				(arr_x[0] >= 240 && arr_x[0] <= 340 && arr_y[0] >= 150 && arr_y[0] <= 200) || (arr_x[0] >= 400 && arr_x[0] <= 500 && arr_y[0] >= 300 && arr_y[0] <= 350) ||
+				(arr_x[0] >= 440 && arr_x[0] <= 540 && arr_y[0] >= 80 && arr_y[0] <= 130) || (arr_x[0] >= 500 && arr_x[0] <= 600 && arr_y[0] >= 430 && arr_y[0] <= 480) ||
+				(arr_x[0] >= 580 && arr_x[0] <= 680 && arr_y[0] >= 220 && arr_y[0] <= 270) || (arr_x[0] >= 700 && arr_x[0] <= 800 && arr_y[0] >= 100 && arr_y[0] <= 150) ||
+				(arr_x[0] >= 800 && arr_x[0] <= 900 && arr_y[0] >= 300 && arr_y[0] <= 350) || (arr_x[0] >= 900 && arr_x[0] <= 1000 && arr_y[0] >= 150 && arr_y[0] <= 200) ||
+				(arr_x[0] >= 1000 && arr_x[0] <= 1100 && arr_y[0] >= 430 && arr_y[0] <= 480) || (arr_x[0] >= 1100 && arr_x[0] <= 1200 && arr_y[0] >= 220 && arr_y[0] <= 270))
+
+
+				
+
+			{
+
+
+				mint = 2;
+				sec = 0;
+				counter_for_sp_food = 0;
+				counter_for_special_circle_food = 0;
+
+				gotoright = false;
+				gotoleft = false;
+				gotoup = false;
+				gotodown = false;
+
+				arr_x[0] = circle1_position_x;
+				arr_x[1] = circle1_position_x - circle_pos_x_difference;
+				arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+				arr_y[0] = circle1_position_y;
+				arr_y[1] = circle1_position_y;
+				arr_y[2] = circle1_position_y;
+
+
+				flag = 0;
+				i = 0;
+				k = 1;
+
+
+				foodCounter = 0;
+
+
+
+				forFood = 15;
+
+				lifeCounter++;
+				if (lifeCounter == 1){
+					for_first_life = 0;
+					counter_for_show_game_over++;
+				}
+				else if (lifeCounter == 2){
+					for_second_life = 0;
+					counter_for_show_game_over++;
+				}
+				else if (lifeCounter == 3){
+					for_third_life = 0;
+					counter_for_show_game_over++;
+				}
+
+				snake_head_cobra_right_pos_x = 155;
+				snake_head_cobra_right_pos_y = 75;
+
+				flag_snake_head_cobra_left = 0;
+				flag_snake_head_cobra_up = 0;
+				flag_snake_head_cobra_down = 0;
+				flag_snake_head_cobra_right = 1;
+
+
+
+
+
+
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		}
+
+		if (Showing_congratulations_background == 1){
+
+			iShowBMP(0,0,"congratulations_background.bmp");
+			iShowBMP2(50, 200, "snake_white.bmp", 0);
+			iShowBMP2(950, 200, "snake_white.bmp", 0);
+			iSetColor(255,255,255);
+			iText(500, 540, "* Press 'M' for Menu *", GLUT_BITMAP_TIMES_ROMAN_24);
+			flag_when_menu_snake_move_not_possible = 0;
+			counter_for_show_game_over = 0;
+			lifeCounter = 0;
+			forTime = 0;
+
+		}
+
+
+
+	
+
+	}
+
+
+
+
+
+	/*
+		function iMouseMove() is called when the user presses and drags the mouse.
+		(mx, my) is the position where the mouse pointer is.
+		*/
+	void iMouseMove(int mx, int my)
+	{
+		//place your codes here
+	}
+
+	/*
+		function iMouse() is called when the user presses/releases the mouse.
+		(mx, my) is the position where the mouse pointer is.
+		*/
+	void iMouse(int button, int state, int mx, int my)
+	{
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+		{
+			//place your codes here
+			if (mx >= 600 && mx <= 700 && my >= 400 && my <= 450){
+				level_1_for_draw = 1;
+				level_2_for_draw = 0;
+				final_level_for_draw = 0;
+				
+				
+				flag1_for_menu = 0;
+				for_first_life = 1;
+				for_second_life = 1;
+				for_third_life = 1;
+				lifeCounter = 0;
+
+				counter_for_sp_food = 0;
+				counter_for_special_circle_food = 0;
+
+
+				flag_when_menu_snake_move_not_possible = 1;
+				forTime = 1;
+				mint = 2;
+				sec = 0;
+
+			/*	 food_image_position_x = rand() % (win_w - food_width);
+				 food_image_position_y = rand() % (win_h - food_height);
+
+				  food_image_position_x_new_x = food_image_position_x + food_width;
+				  food_image_position_y_new_y = food_image_position_y + food_height;*/
+
+
+
+			  special_circle_food_pos_x = rand() % (win_w - food_width);
+				 special_circle_food_pos_y = rand() % (win_h - food_height);
+
+				  special_circle_food_pos_x_new_x = special_circle_food_pos_x - 20;
+				  special_circle_food_pos_y_new_y = special_circle_food_pos_y - 20;
+				  special_circle_food_pos_x_new_x_new_x = special_circle_food_pos_x_new_x + 40;
+				  special_circle_food_pos_y_new_y_new_y = special_circle_food_pos_y_new_y + 40;
+
+				   special_food_x_pos = rand() % (win_w - food_width);
+				   special_food_y_pos = rand() % (550 - food_height);
+				   special_food_x_new_x = special_food_x_pos + 50;
+				   special_food_y_new_y = special_food_y_pos + 50;
+
+
+				    snake_head_cobra_right_pos_x = 155;
+				    snake_head_cobra_right_pos_y = 75;
+					flag_snake_head_cobra_right = 1;
+					flag_snake_head_cobra_left = 0;
+					flag_snake_head_cobra_up = 0;
+					flag_snake_head_cobra_down = 0;
+
+
+			}
+			else if (mx >= 580 && mx <= 730 && my >= 215 && my <= 265){
+				
+				exit(0);
+			}
+
+
+		}
+		if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN)
+		{
+			//place your codes here
+		}
+	}
+	/*iPassiveMouseMove is called to detect and use
+	the mouse point without pressing any button */
+
+	void iPassiveMouseMove(int mx, int my)
+	{
+		//place your code here
+
+		mposx = mx;
+		mposy = my;
+		if (mx == 2){}        /*Something to do with mx*/
+		else if (my == 2){}   /*Something to do with my*/
+
+	}
+
+	/*
+		function iKeyboard() is called whenever the user hits a key in keyboard.
+		key- holds the ASCII value of the key pressed.
+		*/
+	void iKeyboard(unsigned char key)
+	{
+		if (key == 'q')
+		{
+			//do something with 'q'
+
+			level_1_for_draw = 0;
+			level_2_for_draw = 0;
+			final_level_for_draw = 0;
+			flag1_for_menu = 1;
+			forFood = 15;
+			gotoright = false;
+			gotoleft = false;
+			gotoup = false;
+			gotodown = false;
+			k = 1;
+			forFood = 15;
+			flag = 0;
+			i = 0;
+			foodCounter = 0;
+			flag_when_menu_snake_move_not_possible = 0;
+			counter_for_show_game_over = 0;
+			forTime = 0;
+			
+
+			food_image_position_x = rand() % (win_w - food_width);
+			food_image_position_y = rand() % (550 - food_height);
+
+			food_image_position_x_new_x = food_image_position_x + food_width;
+			food_image_position_y_new_y = food_image_position_y + food_height;
+
+			
+			special_food_flag = 0;
+			special_food_opening_method = 0;
+			counter_for_sp_food = 0;
+			special_food_sec_counter = 5;
+			flag_when_sp_food_visible = 0;
+			 special_food_x_pos = rand() % (win_w - food_width);
+			 special_food_y_pos = rand() % (550 - food_height);
+			 special_food_x_new_x = special_food_x_pos + 50;
+			 special_food_y_new_y = special_food_y_pos + 50;
+
+			
+
+			 flag_which_shows_special_food_circle = 0;
+			 counter_for_special_circle_food = 0;
+			 flag_for_on_off_special_circle_food = 0;
+
+
+
+			 flag_for_special_circle_food_sec_counter = 15;
+			 flag1_for_special_circle_food = 0;
+
+			special_circle_food_pos_x = rand() % (win_w - food_width);
+			 special_circle_food_pos_y = rand() % (win_h - food_height);
+
+
+
+
+
+			
+
+			arr_x[0] = circle1_position_x;
+			arr_x[1] = circle1_position_x - circle_pos_x_difference;
+			arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+			arr_y[0] = circle1_position_y;
+			arr_y[1] = circle1_position_y;
+			arr_y[2] = circle1_position_y;
+			
+
+		}
+		else if (key == 'p'){
+			gotoright = false;
+			gotoleft = false;
+			gotoup = false;
+			gotodown = false;
+		}
+
+		else if (key == 'm'){
+			
+			Showing_congratulations_background = 0;
+
+			level_1_for_draw = 0;
+			level_2_for_draw = 0;
+			final_level_for_draw = 0;
+			flag1_for_menu = 1;
+			forFood = 15;
+			gotoright = false;
+			gotoleft = false;
+			gotoup = false;
+			gotodown = false;
+			k = 1;
+			forFood = 15;
+			flag = 0;
+			i = 0;
+			foodCounter = 0;
+			flag_when_menu_snake_move_not_possible = 0;
+			counter_for_show_game_over = 0;
+			forTime = 0;
+
+
+			special_food_flag = 0;
+			special_food_opening_method = 0;
+			counter_for_sp_food = 0;
+			special_food_sec_counter = 5;
+			flag_when_sp_food_visible = 0;
+
+			special_food_x_pos = rand() % (win_w - food_width);
+			special_food_y_pos = rand() % (550 - food_height);
+			special_food_x_new_x = special_food_x_pos + 50;
+			special_food_y_new_y = special_food_y_pos + 50;
+
+
+
+			flag_which_shows_special_food_circle = 0;
+			counter_for_special_circle_food = 0;
+			flag_for_on_off_special_circle_food = 0;
+
+
+
+			flag_for_special_circle_food_sec_counter = 15;
+			flag1_for_special_circle_food = 0;
+
+			special_circle_food_pos_x = rand() % (win_w - food_width);
+			special_circle_food_pos_y = rand() % (win_h - food_height);
+
+
+
+			arr_x[0] = circle1_position_x;
+			arr_x[1] = circle1_position_x - circle_pos_x_difference;
+			arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+			arr_y[0] = circle1_position_y;
+			arr_y[1] = circle1_position_y;
+			arr_y[2] = circle1_position_y;
+			
+		}
+
+
+
+
+		//place your codes for other keys here
+	}
+
+	/*
+		function iSpecialKeyboard() is called whenver user hits special keys like-
+		function keys, home, end, pg up, pg down, arraows etc. you have to use
+		appropriate constants to detect them. A list is:
+		GLUT_KEY_F1, GLUT_KEY_F2, GLUT_KEY_F3, GLUT_KEY_F4, GLUT_KEY_F5, GLUT_KEY_F6,
+		GLUT_KEY_F7, GLUT_KEY_F8, GLUT_KEY_F9, GLUT_KEY_F10, GLUT_KEY_F11, GLUT_KEY_F12,
+		GLUT_KEY_LEFT, GLUT_KEY_UP, GLUT_KEY_RIGHT, GLUT_KEY_DOWN, GLUT_KEY_PAGE UP,
+		GLUT_KEY_PAGE DOWN, GLUT_KEY_HOME, GLUT_KEY_END, GLUT_KEY_INSERT
+		*/
+	void iSpecialKeyboard(unsigned char key)
+	{
+		if (flag_when_menu_snake_move_not_possible == 1){
+			if (key == GLUT_KEY_RIGHT) {
+				flag_snake_head_cobra_right = 1;
+				flag_snake_head_cobra_left = 0;
+				flag_snake_head_cobra_up = 0;
+				flag_snake_head_cobra_down = 0;
+
+				if (gotoleft){
+					
+				}
+
+
+
+				else{
+					gotoright = true;
+					gotoleft = false;
+					gotoup = false;
+					gotodown = false;
+				}
+
+			}
+
+
+			else if (key == GLUT_KEY_LEFT){
+				flag_snake_head_cobra_right = 0;
+				flag_snake_head_cobra_left = 1;
+				flag_snake_head_cobra_up = 0;
+				flag_snake_head_cobra_down = 0;
+				if (gotoright){
+
+				}
+				else{
+					gotoright = false;
+					gotoleft = true;
+					gotoup = false;
+					gotodown = false;
+				}
+			}
+			else if (key == GLUT_KEY_UP){
+				flag_snake_head_cobra_right = 0;
+				flag_snake_head_cobra_left = 0;
+				flag_snake_head_cobra_up = 1;
+				flag_snake_head_cobra_down = 0;
+				if (gotodown){
+
+				}
+
+
+
+
+				else{
+					gotoright = false;
+					gotoleft = false;
+					gotoup = true;
+					gotodown = false;
+				}
+
+			}
+			else if (key == GLUT_KEY_DOWN){
+				flag_snake_head_cobra_right = 0;
+				flag_snake_head_cobra_left = 0;
+				flag_snake_head_cobra_up = 0;
+				flag_snake_head_cobra_down = 1;
+				if (gotoup){
+
+				}
+				else{
+					gotoright = false;
+					gotoleft = false;
+					gotoup = false;
+					gotodown = true;
+				}
+
+			}
+		}
+		
+		/*if(key == GLUT_KEY_END)
+		{
+		exit(0);
+		}*/
+		//place your codes for other keys here
+	}
+
+//
+int main()
+{
+	//place your own initialization codes here.
+	srand((unsigned)time(NULL));
+	iSetTimer(200, ColorChange);
+    iSetTimer(200, snake_move);
+	iSetTimer(1000,for_time);
+	iSetTimer(1000, for_special_food);
+	iSetTimer(1000, special_circle_food_method);
+
+	arr_x[0] = circle1_position_x;
+	arr_x[1] = circle1_position_x - circle_pos_x_difference;
+	arr_x[2] = circle1_position_x - (2 * circle_pos_x_difference);
+	arr_y[0] = circle1_position_y;
+	arr_y[1] = circle1_position_y;
+	arr_y[2] = circle1_position_y;
+	
+	
+		iInitialize(win_w, win_h, "For project");
+
+	
+
+
+	return 0;
+}
